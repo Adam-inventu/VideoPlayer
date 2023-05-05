@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Video Player</string>
+    <string name="string_app_name">Video Player</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -9,7 +9,43 @@
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:use_controller="false"
         app:show_buffering="when_playing"
-        app:show_shuffle_button="true"/>
+        app:show_shuffle_button="false"/>
+
+    <ImageButton
+        android:id="@+id/button_play_pause"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/ic_play"
+        android:background="@drawable/ic_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_next"
+        app:layout_constraintStart_toEndOf="@id/button_previous"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_next"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_next"
+        android:background="@drawable/ic_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_play_pause"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_previous"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_previous"
+        android:background="@drawable/ic_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_play_pause"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
