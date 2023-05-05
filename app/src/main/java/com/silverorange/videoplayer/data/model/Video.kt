@@ -1,6 +1,6 @@
 package com.silverorange.videoplayer.data.model
 
-data class Video (
+data class Video(
     val author: Author,
     val description: String,
     val fullURL: String,

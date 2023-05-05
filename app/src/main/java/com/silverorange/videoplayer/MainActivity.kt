@@ -14,6 +14,7 @@ import androidx.media3.ui.PlayerView
 import com.silverorange.videoplayer.data.model.Video
 import com.silverorange.videoplayer.data.viewModel.VideoViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.noties.markwon.Markwon
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var playPauseButton: ImageButton
     private lateinit var nextButton: ImageButton
     private lateinit var previousButton: ImageButton
+    private lateinit var markwon: Markwon
+    private lateinit var videoDetailsText: TextView
 
     private val videoViewModel: VideoViewModel by viewModels()
 
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         playPauseButton = findViewById(R.id.button_play_pause)
         nextButton = findViewById(R.id.button_next)
         previousButton = findViewById(R.id.button_previous)
+        videoDetailsText = findViewById(R.id.video_details_text)
 
         titleText.text = getString(R.string.string_app_name)
 
@@ -47,12 +51,15 @@ class MainActivity : AppCompatActivity() {
         player = ExoPlayer.Builder(applicationContext).build()
         playerView.player = player
 
+        markwon = Markwon.create(applicationContext)
+
 
         lifecycleScope.launchWhenStarted {
             videoViewModel.currentVideo.collectLatest {
                 Log.d(mTAG, it.toString())
-                if(it != null){
+                if (it != null) {
                     playVideo(it)
+                    setDetailsText(it)
                 }
             }
         }
@@ -89,7 +96,10 @@ class MainActivity : AppCompatActivity() {
         } catch (error: Error) {
             Log.d(mTAG, error.toString())
         }
+    }
 
+    private fun setDetailsText(video: Video) {
+        markwon.setMarkdown(videoDetailsText, video.description)
     }
 
 }

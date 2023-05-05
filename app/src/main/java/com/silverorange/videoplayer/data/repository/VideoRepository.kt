@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 
-class VideoRepository (
+class VideoRepository(
     private val videoRemoteDataSource: VideoRemoteDataSource
 ) {
     private val mTAG = "VideoRepository"
@@ -18,10 +18,9 @@ class VideoRepository (
 
     suspend fun refreshVideos() {
         val response = videoRemoteDataSource.getVideos()
-        if(response.status == Resource.Status.SUCCESS) {
+        if (response.status == Resource.Status.SUCCESS) {
             _videos.value = response.data?.map { it.toVideo() } ?: emptyList()
-        }
-        else {
+        } else {
             val message = response.message ?: "an unknown error occurred"
             Log.d(mTAG, message)
         }

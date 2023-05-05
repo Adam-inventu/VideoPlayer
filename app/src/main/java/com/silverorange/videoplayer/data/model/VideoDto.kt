@@ -1,6 +1,6 @@
 package com.silverorange.videoplayer.data.model
 
-data class VideoDto (
+data class VideoDto(
     val author: Author,
     val description: String,
     val fullURL: String,
@@ -9,7 +9,7 @@ data class VideoDto (
     val publishedAt: String,
     val title: String
 ) {
-    fun toVideo() : Video {
+    fun toVideo(): Video {
         return Video(
             author = author,
             description = description,
