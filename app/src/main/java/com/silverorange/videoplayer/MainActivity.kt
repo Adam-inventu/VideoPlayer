@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var previousButton: ImageButton
     private lateinit var markwon: Markwon
     private lateinit var videoDetailsText: TextView
+    private lateinit var videoTitleText: TextView
+    private lateinit var videoAuthorText: TextView
 
     private val videoViewModel: VideoViewModel by viewModels()
 
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.button_next)
         previousButton = findViewById(R.id.button_previous)
         videoDetailsText = findViewById(R.id.video_details_text)
+        videoTitleText = findViewById(R.id.video_title_text)
+        videoAuthorText = findViewById(R.id.video_author_text)
 
         titleText.text = getString(R.string.string_app_name)
 
@@ -55,13 +59,20 @@ class MainActivity : AppCompatActivity() {
 
 
         lifecycleScope.launchWhenStarted {
-            videoViewModel.currentVideo.collectLatest {
-                Log.d(mTAG, it.toString())
-                if (it != null) {
-                    playVideo(it)
-                    setDetailsText(it)
+            videoViewModel.videos.collectLatest { videos ->
+                videoViewModel.currentVideo.collectLatest {
+                    if (it != null) {
+                        playVideo(it)
+                        setDetailsText(it)
+                        previousButton.isClickable = it != videos.first()
+                        nextButton.isClickable = it != videos.last()
+                    } else {
+                        nextButton.isClickable = false
+                        previousButton.isClickable = false
+                    }
                 }
             }
+
         }
         videoViewModel.refreshVideos()
 
@@ -91,14 +102,16 @@ class MainActivity : AppCompatActivity() {
             val mediaItem = MediaItem.fromUri(videoUri)
             player.setMediaItem(mediaItem)
             player.prepare()
-            player.play()
-            playPauseButton.setImageResource(R.drawable.ic_pause)
+            player.pause()
+            playPauseButton.setImageResource(R.drawable.ic_play)
         } catch (error: Error) {
             Log.d(mTAG, error.toString())
         }
     }
 
     private fun setDetailsText(video: Video) {
+        videoAuthorText.text = video.author.name
+        videoTitleText.text = video.title
         markwon.setMarkdown(videoDetailsText, video.description)
     }
 

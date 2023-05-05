@@ -38,17 +38,18 @@ class VideoViewModel @Inject constructor(
     fun getNextVideo() {
         val count = videos.value.size
         if (count > 0) {
-            val index = (videos.value.indexOf(currentVideo.value) + 1) % count
-            _currentVideo.value = videos.value[index]
+            val index = videos.value.indexOf(currentVideo.value) + 1
+            if (index < count)
+                _currentVideo.value = videos.value[index]
         }
     }
 
     fun getPreviousVideo() {
         val count = videos.value.size
         if (count > 0) {
-            var index = videos.value.indexOf(currentVideo.value) - 1
-            if (index < 0) index = count - 1
-            _currentVideo.value = videos.value[index]
+            val index = videos.value.indexOf(currentVideo.value) - 1
+            if (index >= 0)
+                _currentVideo.value = videos.value[index]
         }
     }
 
