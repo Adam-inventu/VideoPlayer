@@ -18,7 +18,7 @@ object NetworkModule {
     fun provideService(): RetrofitService {
         val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
         return Retrofit.Builder()
-            .baseUrl("http://10.0.0.60:4000/")
+            .baseUrl("http://127.0.0.1:4000/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
             .build()
